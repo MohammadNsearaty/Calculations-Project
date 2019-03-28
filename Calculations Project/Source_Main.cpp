@@ -274,11 +274,12 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	Camera();
 	skybox();
 
-	ObjVec.AddObject(&cubeTest);
-	//ObjVec.AddObject(&TestShpere1);
+	//ObjVec.AddObject(&cubeTest);
+	ObjVec.AddObject(&TestShpere1);
 	//ObjVec.AddObject(&TestShpere2);
 
 
+	ObjVec.getElement(0)->applyForce(Vector3f(0.00001, 0.00001, 0));
 	for (int i = 0; i < ObjVec.getLength(); i++)
 	{
 		Shapes* sh = ObjVec.getElement(i);

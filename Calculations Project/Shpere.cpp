@@ -33,11 +33,17 @@ void Shpere::draw_3D() {
 		glColor3d(color.GetX(), color.GetY(), color.GetZ());
 		glTranslatef(position.GetX(), position.GetY(), position.GetZ());
 		gluSphere(quadric1, Radius, Longitudes, Latitudes);
+		glColor3d(1, 1, 1);
+
 	}
 	glPopMatrix();
 }
 
 void Shpere::applyForce(Vector3f force) {
+	acc.Set(0, 0, 0);
+	acc.Set(acc.GetX() + force.GetX(), acc.GetY() + force.GetY(), acc.GetZ() + force.GetZ());
+	speed.Set(speed.GetX() + acc.GetX(), speed.GetY() + acc.GetY(), speed.GetZ() + acc.GetZ());
+	position.Set(position.GetX() + speed.GetX(), position.GetY() + speed.GetY(), position.GetZ() + speed.GetZ());
 }
 
 Collision_Data Shpere::Collision(Shapes* other) {
