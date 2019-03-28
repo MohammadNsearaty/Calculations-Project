@@ -3,8 +3,7 @@
 #define PhysicsObject_H
 #include "math3d.h"
 #include"Shpere.h"
-
-class PhysicsObject {
+/*class PhysicsObject {
    private:
 	   Vector3f Postion;
 	   Vector3f Velocity;
@@ -59,5 +58,5 @@ PhysicsObject::PhysicsObject(Vector3f postion, Vector3f velocity, float raduis) 
 
 
 
-
+*/
 #endif // !PhysicsObject_H

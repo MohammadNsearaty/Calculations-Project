@@ -9,24 +9,24 @@
 class Plane {
 
 private:
-	Vector3f Normal;
-	float Distance;
+	Vector3f normal;
+	float length;
 
 public:
 	Plane() {
-		Normal = 0.0f;
-		Distance = 0.0f;
+		normal = 0.0f;
+		length = 0.0f;
 	}
 	Plane(Vector3f normal, float distance)
 	{
-		Normal = normal;
-		Distance = distance;
+		normal = normal;
+		length = distance;
 	}
 
-	Vector3f GetNormal(){return Normal;}
+	Vector3f getNormal(){return normal;}
 
-	float GetDistance(){
-		return Distance;
+	float getLength(){
+		return length;
 	}
 
 	Plane Normalized();

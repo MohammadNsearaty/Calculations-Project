@@ -17,59 +17,100 @@
 class Shapes {
 protected:
 
-	
-	//TODO:the main paramitives
-	float Coordinates1;
-	float Coordinates2;
-	float Coordinates3;
-
-	//TODO:the color paramitives (RGB)
-	float Color1;
-	float Color2;
-	float Color3;
-
-	//TODO:the paramivites for move
-	float Accelerates;  // the value of increased of speed
-	float Speed;
-	float Time;
-	float Mass;
+	Vector3f position;
+	Vector3f color;
+	Vector3f acc;
+	Vector3f speed;
+	float mass;
 
 
 public:
-	Shapes(){
-		this->Coordinates1 = 0;
-		this->Coordinates2 = 0;
-		this->Coordinates3 = 0;
-		this->Color1 = 0.0f;
-		this->Color2 = 0.0f;
-		this->Color3 = 0.0f;
-		this->Accelerates = 0.0f;
-		this->Mass = 0.0f;
-		this->Time = 0.0f;
-		this->Speed = 0.0f;
+	Shapes() {
+		position.Set(0, 0, 0);
+		color.Set(0.0f, 0.0f, 0.0f);
+		acc.Set(0, 0, 0);
+		mass = 0.0f;
+		speed.Set(0, 0, 0);
+
 	}
-	Shapes(float Coordinates1, float Coordinates2, float Coordinates3, float Color1, float Color2, float Color3){
-		this->Coordinates1 = Coordinates1;
-		this->Coordinates2 = Coordinates2;
-		this->Coordinates3 = Coordinates3;
-		this->Color1 = Color1;
-		this->Color2 = Color2;
-		this->Color3 = Color3;
+	Shapes(float Coordinates1, float Coordinates2, float Coordinates3, float Color1, float Color2, float Color3) {
+		position.Set(Coordinates1, Coordinates2, Coordinates3);
+		color.Set(Color1, Color2, Color3);
+	}
+	void Integrate(float alpha) {
+		position.Set(position.GetX() + speed.GetX(), position.GetY() + speed.GetY(), position.GetZ() + speed.GetZ());
+	}
+	Vector3f getPostion() {
+		return position;
 	}
 
-
+	Vector3f getSpeed() {
+		return speed;
+	}
+	float getMass()
+	{
+		return mass;
+	}
+	Vector3f getAcc()
+	{
+		return acc;
+	}
+	void setPosition(Vector3f pos)
+	{
+		position.Set(pos.GetX(), pos.GetY(), pos.GetZ());
+	}
+	void setSpeed(Vector3f sp)
+	{
+		speed.Set(sp.GetX(), sp.GetY(), sp.GetZ());
+	}
+	void setAcc(Vector3f ac)
+	{
+		acc.Set(ac.GetX(), ac.GetY(), ac.GetZ());
+	}
+	void setMass(float m)
+	{
+		mass = m;
+	}
+	void reverseSpeed(int x, int y, int z)
+	{
+		speed.SetX(speed.GetX()*x);
+		speed.SetY(speed.GetY() * y);
+		speed.SetZ(speed.GetZ() * z);
+	}
+	virtual Collision_Data Collision(Shapes *other) { return Collision_Data(1, true); };
 	//TODO:To draw 2D shapes
-	virtual void draw_2D(int x, int y) = 0;
+	virtual void draw_2D(int x, int y) {};
 
 	//TODO:To draw 3D shapes
-	virtual void draw_3D(int x, int y, int z) = 0;
+	virtual void draw_3D() {};
 
 	//TODO:To move the Shapes
-	virtual float Move_Shape( float S, float T, float M) = 0;
+	virtual void applyForce(Vector3f force) {};
 
 	//TODO:To Collision
-	virtual void Collision2() = 0;
+	virtual void Collision2() {};
 
 
 };
 #endif // !1
+
+/*
+
+		float RaduisDistance = Radius + other.Radius;
+		float CenterDistance = (other.getVec().Length() - Center.Length());
+		float distance = CenterDistance - RaduisDistance;
+
+		if (CenterDistance < RaduisDistance) {
+
+			return(Collision_Data(distance, true));
+		}
+		else if (CenterDistance == RaduisDistance) {
+
+			return(Collision_Data(distance, true));
+
+		}
+		else {
+			return(Collision_Data(distance, false));
+		}
+
+		*/

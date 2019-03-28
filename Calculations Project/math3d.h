@@ -52,6 +52,12 @@ class Vector
 public:
 	Vector() { }
 
+	/*Vector3f multi(float n)
+	{
+		values[0] *= n;
+		values[1] *= n;
+		values[2] *= n;
+	}*/
 	inline T Dot(const Vector<T, D>& r) const
 	{
 		T result = T(0);

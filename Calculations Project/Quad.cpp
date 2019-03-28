@@ -1,30 +1,21 @@
 #include "Quad.h"
 
 Quad::Quad() {
-	this->Coordinates1 = 0;
-	this->Coordinates2 = 0;
-	this->Coordinates3 = 0;
-	Color1 = 1.0f;
-	Color2 = 1.0f;
-	Color3 = 1.0f;
-	NumRib = 0;
+	position.Set(0, 0, 0);
+	color.Set(1.0f, 1.0f, 1.0f);
+	length = 1;
 }
 
-Quad::Quad(float H, float L, float W, float C1, float C2, float C3, int NumRib) {
+Quad::Quad(float H, float L, float W, float c1, float c2, float c3, float l) {
 
-	this->Coordinates1 = H;
-	this->Coordinates2 = L;
-	this->Coordinates3 = W;
-	Color1 = C1;
-	Color2 = C2;
-	Color3 = C3;
-	NumRib = NumRib;
-
+	position.Set(H, L, W);
+	color.Set(c1, c2, c3);
+	length = l;
 }
 
 
 void Quad::draw_2D(int x, int y) {
-	glColor3d(Color1, Color2, Color3);
+	glColor3d(color.GetX(), color.GetY(), color.GetZ());
 	glBegin(GL_QUADS);
 	{
 		glVertex2d(x, y);
@@ -35,7 +26,7 @@ void Quad::draw_2D(int x, int y) {
 
 }
 
-void Quad::draw_3D(int x, int y, int z) {
+void Quad::draw_3D() {
 
 
 }
@@ -44,7 +35,7 @@ float Quad::Move_Shape(float S, float T, float M) {
 
 	//A += S / T;
 
-	return Accelerates;
+	return acc.GetX();
 }
 
 void Quad::Collision2() {};

@@ -5,7 +5,6 @@
 
 
 class Collision_Data {
-
 protected:
 	float Distance;
 	bool isCollision;
@@ -14,7 +13,8 @@ public:
     Collision_Data(float Dis, bool is) {
 		Distance = Dis;
 		isCollision = is;
-	}	bool getisCollision(){ return isCollision; }
+	}	
+	bool getisCollision(){ return isCollision; }
 	float getDistance(){
 		return Distance;
 	}
