@@ -22,6 +22,8 @@ protected:
 	Vector3f acc;
 	Vector3f speed;
 	float mass;
+	float length[5];
+
 
 
 public:
@@ -85,7 +87,15 @@ public:
 	virtual void draw_3D() {};
 
 	//TODO:To move the Shapes
-	virtual void applyForce(Vector3f force) {};
+	void applyForce(Vector3f force) {
+
+		force.Set(force.GetX() / mass, force.GetY() / mass, force.GetZ() / mass);
+
+		acc.Set(0, 0, 0);
+		acc.Set(acc.GetX() + force.GetX(), acc.GetY() + force.GetY(), acc.GetZ() + force.GetZ());
+		speed.Set(speed.GetX() + acc.GetX(), speed.GetY() + acc.GetY(), speed.GetZ() + acc.GetZ());
+		position.Set(position.GetX() + speed.GetX(), position.GetY() + speed.GetY(), position.GetZ() + speed.GetZ());
+		}
 
 	//TODO:To Collision
 	virtual void Collision2() {};

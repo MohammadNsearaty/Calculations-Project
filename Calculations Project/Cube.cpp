@@ -3,19 +3,20 @@
 Cube::Cube() {
 	Shapes();
 	quadric1 = gluNewQuadric();
-	length = 1;
+	length[0] = 1;
 }
-Cube::Cube(GLUquadric *quadric, float l,float x,float y,float z,float c1,float c2,float c3) {
+Cube::Cube(GLUquadric *quadric, float l,float m,float x,float y,float z,float c1,float c2,float c3) {
+	mass = m; 
 	position.Set(x, y, z);
 	color.Set(c1, c2, c3);
 	quadric1 = quadric;
-	length = l;
+	length[0] = l;
 	calcEdges();
 }
 
 void Cube::calcEdges()
 {
-	float d = length / 2;
+	float d = length[0] / 2;
 	float x = position.GetX(), y = position.GetY(), z = position.GetZ();
 	edges[0].Set((x + d),(y + d), (z - d));
 	edges[1].Set(x + d, y + d, z + d);
@@ -28,9 +29,13 @@ void Cube::calcEdges()
 }
 
 void Cube::draw_3D() { 
+	glColor3d(color.GetX(), color.GetY(), color.GetZ());
 	glPushMatrix();
 	{
-
+		/*for (int i = 0; i <8; i++)
+			edges[i].Set(edges[i].GetX() + speed.GetX(), edges[i].GetY() + speed.GetY(), edges[i].GetZ() + speed.GetZ());
+		*/
+		calcEdges();
 		//upper face
 		glBegin(GL_QUADS);
 		glVertex3f(edges[0].GetX(),edges[0].GetY(),edges[0].GetZ());
@@ -88,8 +93,6 @@ void Cube::draw_2D(int x, int y) { }
 
 //TODO: To draw Cube
 
-void Cube::applyForce(Vector3f force) {
-}
 
 Collision_Data Cube::Collision(Shapes* other)
 {

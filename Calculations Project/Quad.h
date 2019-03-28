@@ -7,9 +7,6 @@
 
 
 class Quad : public Shapes {
-
-private:
-	float length;
 public:
 
 	Quad();

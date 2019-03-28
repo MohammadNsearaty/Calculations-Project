@@ -212,16 +212,15 @@ GLUquadric *NewQuadric = gluNewQuadric();
 
 
 //Make a Shpere
-Shpere s1(NewQuadric, 1.0, 0, 0, 0, 1, 0.1, 0);
+/*Shpere s1(NewQuadric, 1.0, 0, 0, 0, 1, 0.1, 0);
 Shpere s2(NewQuadric, 1.0, 2, 0, 0, 1, 0.4, 0.5);
 Shpere s3(NewQuadric, 1.0, 0, 2, 0, 0, 0.8, 0);
 Shpere s4(NewQuadric, 1.0, 0, 0, 2, 0, 0.1, 0.9);
 Shpere s5(NewQuadric, 1.0, 1, 1, 0, 0.4, 0, 0.7);
 Shpere s6(NewQuadric, 1.0, 0, 1, 1, 1, 1, 0);
 
-
-Shpere TestShpere1(NewQuadric, 1.0, 1, 0, 1, 1, 1, 0);//my test shpere
-Shpere TestShpere2(NewQuadric, 1.0, 0, 0, 0, 1, 1, 0); //my test shpere
+*/
+//Shpere TestShpere2(NewQuadric, 1.0, 0, 0, 0, 1, 1, 0); //my test shpere
 //Make a plane
 //Plane plane(Vector3f(0.0f, 1.0f, 0.0f), 0.0f); //the Course plane
   Plane Myplane(Vector3f(0.0f, -40.0f, 0.0f), 0.0f); // my test plane
@@ -256,13 +255,11 @@ AxisAlignBounding Axis3 = AxisAlignBounding(Vector3f(1.0f, 0.0f, 0.0f), Vector3f
 AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3f(1.0f, 1.0f, -1.0f));
 AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
 
-Cube cubeTest(NewQuadric,2,1,0,1,1,0.2,0.3);
+
+Shpere TestShpere1(NewQuadric, 1,0.1, 4, 0, 0, 1, 1, 0);//my test shpere
+Cube cubeTest(NewQuadric, 2,20, 1, 0, 0, 1, 0.2, 0.3);
 PhysicsEngine ObjVec;
 
-
-//PhysicsObject Object1(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f),1.0f);
-//PhysicsObject Object2(Vector3f(0.0f, 0.0f, 10.0f), Vector3f(0.0f, 0.0f, -1.0f), 2.0f);
- 
 
 
 double x = 0.0;
@@ -270,16 +267,18 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glTranslated(0,0,-15);
+	glTranslated(0,0,-25);
 	Camera();
 	skybox();
 
-	//ObjVec.AddObject(&cubeTest);
+	ObjVec.AddObject(&cubeTest);
 	ObjVec.AddObject(&TestShpere1);
 	//ObjVec.AddObject(&TestShpere2);
 
+	Vector3f force(0.0001, 0, 0);
+	ObjVec.getElement(0)->applyForce(force);
+	ObjVec.getElement(1)->applyForce(force);
 
-	ObjVec.getElement(0)->applyForce(Vector3f(0.00001, 0.00001, 0));
 	for (int i = 0; i < ObjVec.getLength(); i++)
 	{
 		Shapes* sh = ObjVec.getElement(i);

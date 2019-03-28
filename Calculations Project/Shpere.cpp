@@ -2,19 +2,19 @@
 
 Shpere::Shpere() {
 	position.Set(0, 0, 0);
-	Radius = 4;
-	Longitudes = 32;
-	Latitudes = 32;
+	length[0] = 4;
+	Longitudes = 20;
+	Latitudes = 20;
 	color.Set(0.0f, 0.0f, 0.0f);
 	quadric1 = gluNewQuadric();
 }
-Shpere::Shpere(GLUquadric *quadric, float r,float x,float y,float z,float c1,float c2,float c3) {
-	//Shapes(x, y, z, c1, c2, c3);
+Shpere::Shpere(GLUquadric *quadric, float r,float m,float x,float y,float z,float c1,float c2,float c3) {
 	Longitudes = 20;
 	Latitudes = 20;
+	mass = m;
 	position.Set(x, y, z);
 	color.Set(c1, c2, c3);
-	Radius = r;
+	length[0] = r;
 	quadric1 = quadric;
 }
 void Shpere::Draw_Shpere() {
@@ -22,7 +22,7 @@ void Shpere::Draw_Shpere() {
 }
 void Shpere::setRadius(float R)
 {
-	Radius = R;
+	length[0] = R;
 }
 
 void Shpere::draw_2D(int x, int y) { }
@@ -32,19 +32,14 @@ void Shpere::draw_3D() {
 	{
 		glColor3d(color.GetX(), color.GetY(), color.GetZ());
 		glTranslatef(position.GetX(), position.GetY(), position.GetZ());
-		gluSphere(quadric1, Radius, Longitudes, Latitudes);
+		gluSphere(quadric1, length[0], Longitudes, Latitudes);
 		glColor3d(1, 1, 1);
 
 	}
 	glPopMatrix();
 }
 
-void Shpere::applyForce(Vector3f force) {
-	acc.Set(0, 0, 0);
-	acc.Set(acc.GetX() + force.GetX(), acc.GetY() + force.GetY(), acc.GetZ() + force.GetZ());
-	speed.Set(speed.GetX() + acc.GetX(), speed.GetY() + acc.GetY(), speed.GetZ() + acc.GetZ());
-	position.Set(position.GetX() + speed.GetX(), position.GetY() + speed.GetY(), position.GetZ() + speed.GetZ());
-}
+
 
 Collision_Data Shpere::Collision(Shapes* other) {
 

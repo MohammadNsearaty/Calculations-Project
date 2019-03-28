@@ -3,14 +3,18 @@
 Quad::Quad() {
 	position.Set(0, 0, 0);
 	color.Set(1.0f, 1.0f, 1.0f);
-	length = 1;
+	length[0] = 1;
+	length[1] = 1;
+	length[2] = 1;
 }
 
 Quad::Quad(float H, float L, float W, float c1, float c2, float c3, float l) {
 
 	position.Set(H, L, W);
 	color.Set(c1, c2, c3);
-	length = l;
+	length[0] = 1;
+	length[1] = 1;
+	length[2] = 1;
 }
 
 

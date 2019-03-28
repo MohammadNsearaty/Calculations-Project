@@ -9,20 +9,19 @@ class Shpere : public Shapes {
 
 private:
 	GLUquadric *quadric1;
-	float Radius;
 	int Longitudes;
 	int Latitudes;
 
 public:
 	Shpere();
-	Shpere(GLUquadric *quadric, float r,float x,float y,float z,float c1,float c2,float c3);
+	Shpere(GLUquadric *quadric, float r,float m,float x,float y,float z,float c1,float c2,float c3);
 
 	void Draw_Shpere();
 
 	//TODO:The Virtual Function you must reDefine it in The subclass 
 
 	float getRadius() {
-		return Radius;
+		return length[0];
 	}
 	void setRadius(float R);
 
@@ -32,7 +31,6 @@ public:
 
 	void draw_3D();
 
-	void applyForce(Vector3f force);
 
 	Collision_Data Collision(Shapes* other);
 	void Collision2() {
