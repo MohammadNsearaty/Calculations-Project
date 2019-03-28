@@ -96,7 +96,28 @@ void Cube::draw_2D(int x, int y) { }
 
 Collision_Data Cube::Collision(Shapes* other)
 {
-	return Collision_Data(1, true);
+	float l1 = length[0]/2;
+	float l2 = other[0].getlength()[0];
+	float l = l1 + l2;
+
+	float x1 = position.GetX(), y1 = position.GetY(), z1 = position.GetZ();
+	float x2 = other[0].getPostion().GetX();
+	float y2 = other[0].getPostion().GetY();
+	float z2 = other[0].getPostion().GetZ();
+
+
+	float dist = sqrt( (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) + (z2 - z1)*(z2 - z1));
+
+
+	if (dist < l)
+	{
+		return Collision_Data(dist, true);
+	}
+	else
+	{
+		return Collision_Data(dist, false);
+	}
+
 }
 
 void Cube::Collision2() {

@@ -206,6 +206,7 @@ void skybox()
 
 
 GLUquadric *NewQuadric = gluNewQuadric();
+GLUquadric *NewQuadric2 = gluNewQuadric();
 
 
 
@@ -256,10 +257,10 @@ AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3
 AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
 
 
-Shpere TestShpere1(NewQuadric, 1,0.1, 4, 0, 0, 1, 1, 0);//my test shpere
-Cube cubeTest(NewQuadric, 2,20, 1, 0, 0, 1, 0.2, 0.3);
+Shpere TestShpere1(NewQuadric, 1,2, 4, 0, 0, 1, 1, 0);//my test shpere
+Cube cubeTest(NewQuadric2, 2,1, -4, 0, 0, 1, 0.2, 0.3);
 PhysicsEngine ObjVec;
-
+Vector3f force(0.00001,0,0);
 
 
 double x = 0.0;
@@ -275,13 +276,23 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	ObjVec.AddObject(&TestShpere1);
 	//ObjVec.AddObject(&TestShpere2);
 
-	Vector3f force(0.0001, 0, 0);
+
 	ObjVec.getElement(0)->applyForce(force);
-	ObjVec.getElement(1)->applyForce(force);
+//	ObjVec.getElement(1)->applyForce(force);
 
 	for (int i = 0; i < ObjVec.getLength(); i++)
 	{
 		Shapes* sh = ObjVec.getElement(i);
+		if (i == 0)
+		{
+			Collision_Data c = sh->Collision(ObjVec.getElement(1));
+			if (c.getisCollision())
+			{
+				force.Set(-force.GetX(), 0, 0);
+				sh->reverseSpeed(-1,1,1);
+				sh->applyForce(force);
+			}
+		}
 		sh->draw_3D();
 	}
 	return TRUE;
