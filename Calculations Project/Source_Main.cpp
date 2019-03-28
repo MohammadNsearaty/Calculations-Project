@@ -13,7 +13,8 @@
 #include "AxisAlignBounding_Data.h"
 #include <iostream>
 #include "Plane.h"
-#include "PhysicsEngine.h"
+#include "PhysicsEngine.h"'
+#include "Cube.h"
 
 using namespace std;
 
@@ -255,6 +256,7 @@ AxisAlignBounding Axis3 = AxisAlignBounding(Vector3f(1.0f, 0.0f, 0.0f), Vector3f
 AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3f(1.0f, 1.0f, -1.0f));
 AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
 
+Cube cubeTest(NewQuadric,2,1,0,1,1,0.2,0.3);
 PhysicsEngine ObjVec;
 
 
@@ -272,7 +274,8 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	Camera();
 	skybox();
 
-	ObjVec.AddObject(&TestShpere1);
+	ObjVec.AddObject(&cubeTest);
+	//ObjVec.AddObject(&TestShpere1);
 	//ObjVec.AddObject(&TestShpere2);
 
 
