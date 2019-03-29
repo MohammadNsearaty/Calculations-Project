@@ -1,5 +1,6 @@
 #include"Shpere.h"
 
+
 Shpere::Shpere() {
 	position.Set(0, 0, 0);
 	length[0] = 4;
@@ -33,6 +34,8 @@ void Shpere::draw_3D() {
 		glColor3d(color.GetX(), color.GetY(), color.GetZ());
 		glTranslatef(position.GetX(), position.GetY(), position.GetZ());
 		gluSphere(quadric1, length[0], Longitudes, Latitudes);
+
+
 		glColor3d(1, 1, 1);
 
 	}
@@ -43,24 +46,26 @@ void Shpere::draw_3D() {
 
 Collision_Data Shpere::Collision(Shapes* other) {
 
+	float l1 = length[0] / 2;
+	float l2 = other[0].getlength()[0];
+	float l = l1 + l2;
 
-	//float RaduisDistance = Radius + other.Radius;
-	//float CenterDistance = (other.getVec().Length() - Center.Length());
-	//float distance = CenterDistance - RaduisDistance;
+	float x1 = position.GetX(), y1 = position.GetY(), z1 = position.GetZ();
+	float x2 = other[0].getPostion().GetX();
+	float y2 = other[0].getPostion().GetY();
+	float z2 = other[0].getPostion().GetZ();
 
-	//if (CenterDistance < RaduisDistance) {
 
-	//	return(Collision_Data(distance, true));
-	//}
-	//else if (CenterDistance == RaduisDistance) {
+	float dist = sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1) + (z2 - z1)*(z2 - z1));
 
-	//	return(Collision_Data(distance, true));
 
-	//}
-	//else {
-	//	return(Collision_Data(distance, false));
-	//}
+	if (dist < l)
+	{
+		return Collision_Data(dist, true);
+	}
+	else
+	{
+		return Collision_Data(dist, false);
+	}
 
-	//
-	return Collision_Data(1,true);
 }
