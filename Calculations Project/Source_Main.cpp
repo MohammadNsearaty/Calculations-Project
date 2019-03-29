@@ -257,12 +257,12 @@ AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f
 
 
 Shpere TestShpere1(NewQuadric, 1,2, -4, 0, 0, 1, 1, 0);//my test shpere
-Cube cubeTest(NewQuadric2, 2,1, 6, 0, 0, 1, 0.2, 0.3);
+Cube cubeTest(NewQuadric2, 2,1, 6, -4, 0, 1, 0.2, 0.3);
 Shpere TestShpere2(NewQuadric, 1,10,-8,0,0,0.1,0.4,0.7); //my test shpere
 
 PhysicsEngine ObjVec;
-Vector3f force(0.0001,0,0);
-
+Vector3f force(0.0003,-0.000163333333,0);
+Vector3f gravity(0, 0.0016333, 0);
 
 double x = 0.0;
 int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
