@@ -69,8 +69,8 @@ public:
 
 				Collision_Data data = Objects[0]->Collision(Objects[1]);
 				if (data.getisCollision()) {
-					Objects[0]->reverseSpeed(1,-1,1);
-					Objects[1]->reverseSpeed(-1,1,1);
+					Objects[0]->reverseSpeed(0.005,-0.005, 0.005);
+					Objects[1]->reverseSpeed(-0.005, 0.005, 0.005);
 				}
 		//	}
 		

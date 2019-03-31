@@ -17,9 +17,9 @@ public:
 		normal = 0.0f;
 		length = 0.0f;
 	}
-	Plane(Vector3f normal, float distance)
+	Plane(Vector3f Normal, float distance)
 	{
-		normal = normal;
+		normal = Normal;
 		length = distance;
 	}
 
@@ -30,7 +30,9 @@ public:
 	}
 
 	Plane Normalized();
-    Collision_Data Collision_Shpere_Plane(Shpere s); 
+
+
+    Collision_Data Collision_Shpere_Plane(Shpere *shape);
 
 
 };

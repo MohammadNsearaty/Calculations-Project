@@ -10,15 +10,17 @@ protected:
 	bool isCollision;
 public:
 	Collision_Data();
+
     Collision_Data(float Dis, bool is) {
 		Distance = Dis;
 		isCollision = is;
 	}	
 	bool getisCollision(){ return isCollision; }
-	float getDistance(){
-		return Distance;
-	}
+
+	float getDistance(){	return Distance;	}
+
 	void setDistance(float dist) { Distance = dist; };
+
 	void setIsCollision(bool IsCol) { isCollision = IsCol; };
 
 };
