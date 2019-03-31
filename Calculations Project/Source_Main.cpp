@@ -59,6 +59,68 @@ int Front;
 int Back;
 
 
+GLUquadric *NewQuadric = gluNewQuadric();
+GLUquadric *NewQuadric2 = gluNewQuadric();
+
+
+
+
+
+//Make a Shpere
+/*Shpere s1(NewQuadric, 1.0, 0, 0, 0, 1, 0.1, 0);
+Shpere s2(NewQuadric, 1.0, 2, 0, 0, 1, 0.4, 0.5);
+Shpere s3(NewQuadric, 1.0, 0, 2, 0, 0, 0.8, 0);
+Shpere s4(NewQuadric, 1.0, 0, 0, 2, 0, 0.1, 0.9);
+Shpere s5(NewQuadric, 1.0, 1, 1, 0, 0.4, 0, 0.7);
+Shpere s6(NewQuadric, 1.0, 0, 1, 1, 1, 1, 0);
+
+*/
+//Make a plane
+//Plane plane(Vector3f(0.0f, 1.0f, 0.0f), 0.0f); //the Course plane
+Plane Myplane(Vector3f(0.0f, -40.0f, 0.0f), 0.0f); // my test plane
+
+												   //Intilize Data for Collision_Shpere
+Collision_Data c1(0.0f, false);
+Collision_Data c2(0.0f, false);
+Collision_Data c3(0.0f, false);
+
+
+
+
+//Intilize Data for AxisAlignBounding
+Collision_Data ans1(0.0f, false);
+Collision_Data ans2(0.0f, false);
+Collision_Data ans3(0.0f, false);
+Collision_Data ans4(0.0f, false);
+
+
+
+//For print
+bool JustOne = true;
+bool JustOne2 = true;
+
+float Acce = 0.0f;
+
+
+//To make a Bounding for Shape
+AxisAlignBounding Axis1 = AxisAlignBounding(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 1.0f));
+AxisAlignBounding Axis2 = AxisAlignBounding(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(2.0f, 2.0f, 2.0f));
+AxisAlignBounding Axis3 = AxisAlignBounding(Vector3f(1.0f, 0.0f, 0.0f), Vector3f(2.0f, 1.0f, 1.0f));
+AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3f(1.0f, 1.0f, -1.0f));
+AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
+
+Shapes* sh;
+Shpere TestShpere1(NewQuadric, 1, 2, 6, -4, 0, 1, 1, 0);//my test shpere
+Cube cubeTest(NewQuadric2, 2, 1, -4, 0, 0, 1, 0.2, 0.3);
+Shpere TestShpere2(NewQuadric, 1, 10, -8, 0, 0, 0.1, 0.4, 0.7); //my test shpere
+
+PhysicsEngine ObjVec;
+Vector3f force(0.0000055, 0, 0);
+Vector3f gravity(0, -0.0000016333, 0);
+
+
+double x = 0.0;
+
 
 int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 {
@@ -72,7 +134,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	//TODO: Our Enable
 	glEnable(GL_TEXTURE_2D);
 
-
 	//TODO:Set the Value for the photo of SkyBox
 	Up = LoadTexture("top.bmp",255);
 	Down = LoadTexture("grass.bmp",255);
@@ -81,6 +142,8 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	Front = LoadTexture("front.bmp",255);
 	Back = LoadTexture("back.bmp",255);
 
+	ObjVec.AddObject(&cubeTest);
+	ObjVec.AddObject(&TestShpere1);
 	return TRUE;										// Initialization Went OK
 }
 
@@ -205,66 +268,6 @@ void skybox()
 
 
 
-GLUquadric *NewQuadric = gluNewQuadric();
-GLUquadric *NewQuadric2 = gluNewQuadric();
-
-
-
-
-
-//Make a Shpere
-/*Shpere s1(NewQuadric, 1.0, 0, 0, 0, 1, 0.1, 0);
-Shpere s2(NewQuadric, 1.0, 2, 0, 0, 1, 0.4, 0.5);
-Shpere s3(NewQuadric, 1.0, 0, 2, 0, 0, 0.8, 0);
-Shpere s4(NewQuadric, 1.0, 0, 0, 2, 0, 0.1, 0.9);
-Shpere s5(NewQuadric, 1.0, 1, 1, 0, 0.4, 0, 0.7);
-Shpere s6(NewQuadric, 1.0, 0, 1, 1, 1, 1, 0);
-
-*/
-//Make a plane
-//Plane plane(Vector3f(0.0f, 1.0f, 0.0f), 0.0f); //the Course plane
-  Plane Myplane(Vector3f(0.0f, -40.0f, 0.0f), 0.0f); // my test plane
-
-//Intilize Data for Collision_Shpere
-Collision_Data c1(0.0f, false);
-Collision_Data c2(0.0f, false);
-Collision_Data c3(0.0f,false);
-
-
-
-
-//Intilize Data for AxisAlignBounding
-Collision_Data ans1(0.0f, false);
-Collision_Data ans2(0.0f, false);
-Collision_Data ans3(0.0f, false);
-Collision_Data ans4(0.0f, false);
-
-
-
-//For print
-bool JustOne = true;
-bool JustOne2 = true;
-
-float Acce =0.0f;
-
-
-//To make a Bounding for Shape
-AxisAlignBounding Axis1 = AxisAlignBounding(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 1.0f));
-AxisAlignBounding Axis2 = AxisAlignBounding(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(2.0f, 2.0f, 2.0f));
-AxisAlignBounding Axis3 = AxisAlignBounding(Vector3f(1.0f, 0.0f, 0.0f), Vector3f(2.0f, 1.0f, 1.0f));
-AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3f(1.0f, 1.0f, -1.0f));
-AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
-
-
-Shpere TestShpere1(NewQuadric, 1,2, -4, 0, 0, 1, 1, 0);//my test shpere
-Cube cubeTest(NewQuadric2, 2,1, 6, -4, 0, 1, 0.2, 0.3);
-Shpere TestShpere2(NewQuadric, 1,10,-8,0,0,0.1,0.4,0.7); //my test shpere
-
-PhysicsEngine ObjVec;
-Vector3f force(0.0003,-0.000163333333,0);
-Vector3f gravity(0, 0.0016333, 0);
-
-double x = 0.0;
 int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -273,26 +276,32 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	Camera();
 	skybox();
 
-	ObjVec.AddObject(&cubeTest);
-	ObjVec.AddObject(&TestShpere1);
 	//ObjVec.AddObject(&TestShpere2);
 
 
-//	ObjVec.getElement(0)->applyForce(force);
-	ObjVec.getElement(1)->applyForce(force);
 
-	for (int i = 0; i < ObjVec.getLength(); i++)
+	ObjVec.getElement(0)->applyForce(force);
+	ObjVec.getElement(0)->applyForce(gravity);
+	//ObjVec.getElement(0)->applyForce(gravity);
+
+	int i;
+	int j;
+	for ( i = 0; i < ObjVec.getLength(); i++)
 	{
-		Shapes* sh = ObjVec.getElement(i);
-		if (i == 1)
+		sh = ObjVec.getElement(i);
+
+		for ( j = 0; j < ObjVec.getLength(); j++)
 		{
-			Collision_Data c1 = sh->Collision(ObjVec.getElement(0));
-			//Collision_Data c2 = sh->Collision(ObjVec.getElement(2));
-			if (c1.getisCollision() || c2.getisCollision())
+			if (j!=i)
 			{
-				force.Set(-force.GetX(), 0, 0);
-				sh->reverseSpeed(-1,1,1);
-				sh->applyForce(force);
+			    c1 = sh->Collision(ObjVec.getElement(j));
+				if (c1.getisCollision())
+				{
+					force.Set(-force.GetX(), 0, 0);
+					Vector3f gr(gravity.Reflect(Vector3f(0, 1, 0)));
+					gravity.Set(gr.GetX(), gr.GetY(), gr.GetZ());
+					sh->reverseSpeed(-1, 1, 1);
+				}
 			}
 		}
 		sh->draw_3D();
@@ -619,6 +628,8 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 				}
 				else								// Not Time To Quit, Update Screen
 				{
+
+					
 					DrawGLScene();					// Draw The Scene
 					SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 				}
