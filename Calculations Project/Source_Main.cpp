@@ -117,7 +117,7 @@ Shpere TestShpere1(NewQuadric, 1, 2, 4, 0, 0, 1, 1, 0);//my test shpere
 Cube cubeTest(NewQuadric2, 2, 1, -4, 0, 0, 1, 0.2, 0.3);
 PhysicsEngine ObjVec;
 Vector3f force(0.00001, 0, 0);
-Vector3f force2(-0.01,0 , 0);
+Vector3f force2(0,0.00001f,0);
 
 
 double x = 0.0;
