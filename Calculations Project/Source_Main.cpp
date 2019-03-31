@@ -80,8 +80,7 @@ Shpere s6(NewQuadric, 1.0, 0, 1, 1, 1, 1, 0);
 //Shpere TestShpere2(NewQuadric, 1.0, 0, 0, 0, 1, 1, 0); //my test shpere
 //Make a plane
 //Plane plane(Vector3f(0.0f, 1.0f, 0.0f), 0.0f); //the Course plane
-Plane Myplane(Vector3f(0.0f, -200.0f, 0.0f), 1.0f); // my test plane
-
+Plane Myplane(Vector3f(0.0f, 1, 0.0f), -200); // my test plane
 												   //Intilize Data for Collision_Shpere
 Collision_Data c1(0.0f, false);
 Collision_Data c2(0.0f, false);
@@ -116,8 +115,9 @@ AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f
 Shpere TestShpere1(NewQuadric, 1, 2, 4, 0, 0, 1, 1, 0);//my test shpere
 Cube cubeTest(NewQuadric2, 2, 1, -4, 0, 0, 1, 0.2, 0.3);
 PhysicsEngine ObjVec;
-Vector3f force(0.00001, 0, 0);
-Vector3f force2(0,0.00001f,0);
+double dx = -0.001;
+Vector3f force(0.000001, 0, 0);
+Vector3f force2(0, dx, 0);
 
 
 double x = 0.0;
@@ -285,9 +285,11 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	c1 = Myplane.Collision_Shpere_Plane(ObjVec.getElement(2));
 	if (c1.getisCollision()) {
 		Shapes* sh2 = ObjVec.getElement(2);
-		force2.Set(0, -force.GetY(), 0);
+		float f2 = force2.GetY() * -1;
+		force2.Set(0, f2, 0);
 		sh2->reverseSpeed(1, -1, 1);
-		sh2->applyForce(force2);
+		//sh2->draw_3D();
+		//sh2->applyForce(force2);
 
 	}
 	for (int i = 0; i < ObjVec.getLength(); i++)

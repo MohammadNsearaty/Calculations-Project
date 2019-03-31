@@ -94,11 +94,11 @@ public:
 	void applyForce(Vector3f force) {
 
 		force.Set(force.GetX() / mass, force.GetY() / mass, force.GetZ() / mass);
-		acc.Set(0, 0, 0);
 		acc.Set(acc.GetX() + force.GetX(), acc.GetY() + force.GetY(), acc.GetZ() + force.GetZ());
 		speed.Set(speed.GetX() + acc.GetX(), speed.GetY() + acc.GetY(), speed.GetZ() + acc.GetZ());
 		position.Set(position.GetX() + speed.GetX(), position.GetY() + speed.GetY(), position.GetZ() + speed.GetZ());
-		}
+		acc.Set(0, 0, 0);
+	}
 
 	//TODO:To Collision
 	virtual void Collision2() {};
