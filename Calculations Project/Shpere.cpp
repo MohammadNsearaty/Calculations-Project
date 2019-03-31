@@ -10,8 +10,8 @@ Shpere::Shpere() {
 	quadric1 = gluNewQuadric();
 }
 Shpere::Shpere(GLUquadric *quadric, float r,float m,float x,float y,float z,float c1,float c2,float c3) {
-	Longitudes = 10;
-	Latitudes = 10;
+	Longitudes = 32;
+	Latitudes = 32;
 	mass = m;
 	position.Set(x, y, z);
 	color.Set(c1, c2, c3);
