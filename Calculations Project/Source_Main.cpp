@@ -62,17 +62,6 @@ GLUquadric *NewQuadric = gluNewQuadric();
 Vector3f force(0.00000001, 0, 0);
 Vector3f force2(0, -0.000001, 0);
 
-Shpere TestShpere1(NewQuadric, 1, 0.1, 4, 0, 0, 1, 1, 0);//my test shpere
-Cube cubeTest(NewQuadric, 2, 20, -2, 0, 0, 1, 0.2, 0.3); //** -2 = 1
-PhysicsEngine ObjVec;
-
-Plane Myplane(Vector3f(0.0f, 5.0f, 0.0f), 2.0f); // my test plane
-
-Collision_Data c1(0.0f, false);
-Collision_Data c2(0.0f, false);
-Collision_Data c3(0.0f, false);
-Shpere s1(NewQuadric, 1.0, 0.1, 0, 8, 0, 1, 0.1, 0);
-
 
 int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 {
@@ -86,7 +75,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	//TODO: Our Enable
 	glEnable(GL_TEXTURE_2D);
 
-
 	//TODO:Set the Value for the photo of SkyBox
 	Up = LoadTexture("top.bmp",255);
 	Down = LoadTexture("grass.bmp",255);
@@ -94,11 +82,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	Right = LoadTexture("right.bmp",255);
 	Front = LoadTexture("front.bmp",255);
 	Back = LoadTexture("back.bmp",255);
-
-
-	ObjVec.AddObject(&cubeTest);
-	ObjVec.AddObject(&TestShpere1);
-	ObjVec.AddObject(&s1);
 
 	return TRUE;										// Initialization Went OK
 }
@@ -224,15 +207,15 @@ void skybox()
 
 
 
-
+GLUquadric *NewQuadric = gluNewQuadric();
 
 
 
 
 
 //Make a Shpere
-
-/*Shpere s2(NewQuadric, 1.0, 2, 0, 0, 1, 0.4, 0.5);
+/*Shpere s1(NewQuadric, 1.0, 0, 0, 0, 1, 0.1, 0);
+Shpere s2(NewQuadric, 1.0, 2, 0, 0, 1, 0.4, 0.5);
 Shpere s3(NewQuadric, 1.0, 0, 2, 0, 0, 0.8, 0);
 Shpere s4(NewQuadric, 1.0, 0, 0, 2, 0, 0.1, 0.9);
 Shpere s5(NewQuadric, 1.0, 1, 1, 0, 0.4, 0, 0.7);
@@ -242,9 +225,12 @@ Shpere s6(NewQuadric, 1.0, 0, 1, 1, 1, 1, 0);
 //Shpere TestShpere2(NewQuadric, 1.0, 0, 0, 0, 1, 1, 0); //my test shpere
 //Make a plane
 //Plane plane(Vector3f(0.0f, 1.0f, 0.0f), 0.0f); //the Course plane
-
+  Plane Myplane(Vector3f(0.0f, -40.0f, 0.0f), 0.0f); // my test plane
 
 //Intilize Data for Collision_Shpere
+Collision_Data c1(0.0f, false);
+Collision_Data c2(0.0f, false);
+Collision_Data c3(0.0f,false);
 
 
 
@@ -272,6 +258,10 @@ AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3
 AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
 
 
+Shpere TestShpere1(NewQuadric, 1,0.1, 4, 0, 0, 1, 1, 0);//my test shpere
+Cube cubeTest(NewQuadric, 2,20, 1, 0, 0, 1, 0.2, 0.3);
+PhysicsEngine ObjVec;
+
 
 
 double x = 0.0;
@@ -283,22 +273,17 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	Camera();
 	skybox();
 
-	
-
-
+	ObjVec.AddObject(&cubeTest);
+	ObjVec.AddObject(&TestShpere1);
 	//ObjVec.AddObject(&TestShpere2);
 
-
-	//ObjVec.getElement(0)->applyForce(force);
-	//ObjVec.getElement(1)->applyForce(force);
-	//ObjVec.getElement(2)->applyForce(force2);
-
-	//c1 = Myplane.Collision_Shpere_Plane(s1);
-	
+	Vector3f force(0.0001, 0, 0);
+	ObjVec.getElement(0)->applyForce(force);
+	ObjVec.getElement(1)->applyForce(force);
 
 	for (int i = 0; i < ObjVec.getLength(); i++)
 	{
-		Shapes* sh = ObjVec.getElement(2);
+		Shapes* sh = ObjVec.getElement(i);
 		sh->draw_3D();
 	}
 
@@ -632,6 +617,8 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 				}
 				else								// Not Time To Quit, Update Screen
 				{
+
+					
 					DrawGLScene();					// Draw The Scene
 					SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 				}

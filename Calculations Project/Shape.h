@@ -73,6 +73,10 @@ public:
 	{
 		mass = m;
 	}
+	float* getlength()
+	{
+		return length;
+	}
 	void reverseSpeed(int x, int y, int z)
 	{
 		speed.SetX(speed.GetX()*x);
@@ -90,7 +94,6 @@ public:
 	void applyForce(Vector3f force) {
 
 		force.Set(force.GetX() / mass, force.GetY() / mass, force.GetZ() / mass);
-
 		acc.Set(0, 0, 0);
 		acc.Set(acc.GetX() + force.GetX(), acc.GetY() + force.GetY(), acc.GetZ() + force.GetZ());
 		speed.Set(speed.GetX() + acc.GetX(), speed.GetY() + acc.GetY(), speed.GetZ() + acc.GetZ());
