@@ -6,7 +6,7 @@
 #include <texture.h>
 
 
-//#include <math3d.h>
+#include "math3d.h"
 #include "Shape.h"
 #include "Collision_Data.h"
 //#include "Collision_Shpere.h"
@@ -146,6 +146,13 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	ObjVec.AddObject(&cubeTest);
 	ObjVec.AddObject(&s2);
 
+
+	ObjVec.addPlane(bottomPlane);
+	ObjVec.addPlane(upperPlane);
+	ObjVec.addPlane(rightPlane);
+	ObjVec.addPlane(leftPlane);
+	ObjVec.addPlane(frontPlane);
+	ObjVec.addPlane(backPlane);
 
 	//TODO:Set the Value for the photo of SkyBox
 	Up = LoadTexture("top.bmp",255);

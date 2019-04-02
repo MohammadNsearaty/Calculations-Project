@@ -20,3 +20,4 @@ Collision_Data Plane::Collision_Shpere_Plane(Shapes* s) {
 		return Collision_Data(dist2, true);
 	return Collision_Data(dist2, false);
 }
+

@@ -125,6 +125,7 @@
     <ClCompile Include="AxisAlignBounding_Detection.cpp" />
     <ClCompile Include="Collision_Data.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Shpere.cpp" />
