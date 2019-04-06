@@ -1,4 +1,4 @@
-#include"PhysicsEngine.h"
+/*#include"PhysicsEngine.h"
 
 void PhysicsEngine::HandlerCollision()
 {
@@ -7,4 +7,4 @@ void PhysicsEngine::HandlerCollision()
 	for (auto x : planes) {
 
 	}
-}
+}*/
