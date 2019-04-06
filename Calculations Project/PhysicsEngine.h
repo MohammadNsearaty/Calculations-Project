@@ -3,7 +3,6 @@
 #define PhysicsEngine_H
 #pragma once
 #include <vector>
-#include "PhysicsObject.h"
 #include "Shape.h"
 #include "Plane.h"
 using namespace std;
@@ -32,7 +31,7 @@ public:
 
 	void Simulate(float alpha);
 	
-	void HandlerCollision();
+	void HandlerCollision() {};
 
 
 };
@@ -73,23 +72,8 @@ Plane PhysicsEngine::getPlane(int i)
 	//	}
 	}
 
-	void PhysicsEngine::HandlerCollision() {
 
-	//	for (unsigned int i = 0; i < Objects.size(); i++) {
-			
-	//		for (unsigned int j = i+1; j < Objects.size(); j++) {
 
-				Collision_Data data = Objects[0]->Collision(Objects[1]);
-				if (data.getisCollision()) {
-					Objects[0]->reverseSpeed(0.005,-0.005, 0.005);
-					Objects[1]->reverseSpeed(-0.005, 0.005, 0.005);
-				}
-		//	}
-		
-
-	//	}
-
-	}
 
 	
 #endif // !PhysicsEngine_H
