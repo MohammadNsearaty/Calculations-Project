@@ -5,11 +5,13 @@
 #include <vector>
 #include "PhysicsObject.h"
 #include "Shape.h"
+#include "Plane.h"
 using namespace std;
 
 class PhysicsEngine {
 private:
 	vector<Shapes*> Objects;
+	vector<Plane> planes;
 
 public:
 	PhysicsEngine();
@@ -20,7 +22,8 @@ public:
 	{
 		return Objects[i];
 	}
-
+	void addPlane(Plane plane);
+	Plane getPlane(int i);
 	int GetNumVector();
 
 	Shapes* GetPhysicsObject(unsigned int pos);
@@ -34,6 +37,15 @@ public:
 
 };
 
+
+Plane PhysicsEngine::getPlane(int i)
+{
+	return planes[i];
+}
+    void PhysicsEngine::addPlane(Plane plane)
+     {
+		planes.push_back(plane);
+     }
 	PhysicsEngine::PhysicsEngine() {
 
 	}

@@ -32,9 +32,7 @@ void Cube::draw_3D() {
 	glColor3d(color.GetX(), color.GetY(), color.GetZ());
 	glPushMatrix();
 	{
-		/*for (int i = 0; i <8; i++)
-			edges[i].Set(edges[i].GetX() + speed.GetX(), edges[i].GetY() + speed.GetY(), edges[i].GetZ() + speed.GetZ());
-		*/
+		
 		calcEdges();
 		//upper face
 		glBegin(GL_QUADS);
@@ -82,6 +80,7 @@ void Cube::draw_3D() {
 
 	}
 	glPopMatrix();
+	glColor3d(1,1,1);
 
 }
 
