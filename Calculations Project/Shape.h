@@ -103,6 +103,11 @@ public:
 	//TODO:To Collision
 	virtual void Collision2() {};
 
+	 Vector3f getCenter() {
+
+		return position;
+	}
+
 
 };
 #endif // !1
