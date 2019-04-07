@@ -32,7 +32,7 @@ public:
 	Plane Normalized();
 
 
-    Collision_Data Collision_Shpere_Plane(Shapes *shape);
+    Collision_Data Collision_Plane(Shapes *shape);
 
 
 

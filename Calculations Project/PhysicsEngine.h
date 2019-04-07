@@ -11,7 +11,7 @@ class PhysicsEngine {
 private:
 	vector<Shapes*> Objects;
 	vector<Plane> planes;
-
+	vector<Vector3f> forces;
 public:
 	PhysicsEngine();
 
@@ -23,6 +23,8 @@ public:
 	}
 	void addPlane(Plane plane);
 	Plane getPlane(int i);
+	void addForce(Vector3f force);
+	Vector3f getForce(int i);
 	int GetNumVector();
 
 	Shapes* GetPhysicsObject(unsigned int pos);
@@ -31,11 +33,48 @@ public:
 
 	void Simulate(float alpha);
 	
-	void HandlerCollision() {};
+	void HandlerCollision();
 
 
 };
 
+
+void PhysicsEngine::HandlerCollision()
+{
+	for (auto x : Objects)
+	{
+		//Compare With The OTher Objects
+		for (auto y : Objects)
+		{
+			if (x != y)
+			{
+				Collision_Data res1 = x->Collision(y);
+				if (res1.getisCollision())
+				{
+					//handle The Collision  of the Object x with the object y
+				}
+			}
+		}
+		//Compare With The Palnes
+		for (auto z : planes)
+		{
+			Collision_Data res2 = z.Collision_Plane(x);
+			if (res2.getisCollision())
+			{
+				//handle the Collision of the Object x With Plane z
+
+			}
+		}
+	}
+}
+void PhysicsEngine::addForce(Vector3f force)
+{
+	forces.push_back(force);
+}
+Vector3f PhysicsEngine::getForce(int i)
+{
+	return forces[i];
+}
 
 Plane PhysicsEngine::getPlane(int i)
 {
