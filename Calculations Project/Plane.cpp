@@ -9,7 +9,7 @@ Plane Plane::Normalized() {
 
 }
 
-Collision_Data Plane::Collision_Shpere_Plane(Shapes* s) {
+Collision_Data Plane::Collision_Plane(Shapes* s) {
 
 	float dist = fabs(normal.Dot(s->getPostion())-length);
 	
