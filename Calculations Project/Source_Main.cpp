@@ -67,9 +67,6 @@ GLUquadric *NewQuadric3 = gluNewQuadric();
 
 
 
-
-
-
 //Make a Shpere
 Shpere s1(NewQuadric, 1.0,1.0, 0, 0, 0, 1, 0.1, 0); 
 Shpere s2 (NewQuadric3, 1.0, 1.0, 0, 0, 0, 1, 0.1, 0.7);
@@ -84,30 +81,6 @@ Plane frontPlane(Vector3f(0.0f, 0.0f, 1.0f), -100);
 Plane backPlane(Vector3f(0.0f, 0.0f, -1.0f), 100);
 
 
-
-
-											   
-//Intilize Data for Collision_Shpere
-Collision_Data c1(0.0f, false);
-Collision_Data c2(0.0f, false);
-Collision_Data c3(0.0f, false);
-Collision_Data c4(0.0f, false);
-Collision_Data c5(0.0f, false);
-Collision_Data c6(0.0f, false);
-
-
-
-//Intilize Data for AxisAlignBounding
-Collision_Data ans1(0.0f, false);
-Collision_Data ans2(0.0f, false);
-Collision_Data ans3(0.0f, false);
-Collision_Data ans4(0.0f, false);
-
-
-
-//For print
-bool JustOne = true;
-bool JustOne2 = true;
 
 float Acce = 0.0f;
 
@@ -129,7 +102,16 @@ Vector3f force2(0, dy, 0);
 Vector3f force3(0, 0, -0.00001);
 
 
-double x = 0.0;
+//For Lighting 
+float Lightpos[] = { 0, 0, 0, 1.0 };
+float Lightdiff[] = { 1, 1, 1, 1 };
+float Lightspec[] = { 1, 1, 1, 1 };
+
+float Lightamb[] = { 1, 1, 1, 1 };
+float Matamb[] = { 1, 1, 1, 1 };
+float Matspec[] = { 1, 1, 1, 1 };
+
+
 
 int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 {
@@ -161,6 +143,25 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	Right = LoadTexture("right.bmp",255);
 	Front = LoadTexture("front.bmp",255);
 	Back = LoadTexture("back.bmp",255);
+
+
+	//Add to Force List
+	ObjVec.AddForce(force);
+	ObjVec.AddForce(force2);
+	ObjVec.AddForce(force3);
+
+
+	//For Light 
+	glLightfv(GL_LIGHT1, GL_POSITION, Lightpos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, Lightamb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, Lightdiff);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, Lightspec);
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, Matamb);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, Matspec);
+	glMateriali(GL_FRONT, GL_SHININESS, 128);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHTING);
 
 	return TRUE;										// Initialization Went OK
 }
@@ -293,61 +294,10 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	skybox();
 
 
-
-
-	ObjVec.getElement(0)->applyForce(force);
-	ObjVec.getElement(1)->applyForce(force2);
-	ObjVec.getElement(2)->applyForce(force3);
-
-
-	c1 = bottomPlane.Collision_Shpere_Plane(ObjVec.getElement(1));
-	c2 = upperPlane.Collision_Shpere_Plane(ObjVec.getElement(1));
-	c3 = leftPlane.Collision_Shpere_Plane(ObjVec.getElement(0));
-	c4 = rightPlane.Collision_Shpere_Plane(ObjVec.getElement(0));
-	c5 = frontPlane.Collision_Shpere_Plane(ObjVec.getElement(2));
-	c6 = backPlane.Collision_Shpere_Plane(ObjVec.getElement(2));
-
-
-	if (c2.getisCollision()|| c1.getisCollision()) {
-		Shapes* sh2 = ObjVec.getElement(1);
-		
-		float f2 = force2.GetY() * -1;
-		
-		force2.Set(0, f2, 0);
-		
-		sh2->reverseSpeed(1, -1, 1);
-		
-
-	}
-	if (c3.getisCollision()||c4.getisCollision())
-	{
-		Shapes* sh1 = ObjVec.getElement(0);
-		float f1 = force.GetX() * -1;
-		force.Set(f1, 0, 0);
-		sh1->reverseSpeed(-1, 1, 1);
-	}
-	if (c5.getisCollision() || c6.getisCollision())
-	{
-	Shapes* sh3 = ObjVec.getElement(2);
-		float f3 = force.GetZ() * -1;
-		force.Set(0, 0, f3);
-		sh3->reverseSpeed(1, 1, -1);
-	}
-	for (int i = 0; i < ObjVec.getLength(); i++)
-	{
-		Shapes* sh = ObjVec.getElement(i);
-		/*if (i == 0)
-		{
-			Collision_Data c = sh->Collision(ObjVec.getElement(1));
-			if (c.getisCollision())
-			{
-				force.Set(-force.GetX(), 0, 0);
-				sh->reverseSpeed(-1,1,1);
-				sh->applyForce(force);
-			}
-		}*/
-		sh->draw_3D();
-	}
+	ObjVec.HandlerForce(force, force2, force3);
+	ObjVec.HandlerCollisionWithPlane(ObjVec);
+	ObjVec.HandlerDraw(ObjVec);
+	
 	return TRUE;
 }
 
@@ -693,3 +643,4 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	KillGLWindow();									// Kill The Window
 	return (msg.wParam);							// Exit The Program
 }
+
